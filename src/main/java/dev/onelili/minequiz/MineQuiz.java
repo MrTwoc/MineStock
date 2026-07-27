@@ -3,6 +3,7 @@ package dev.onelili.minequiz;
 import dev.onelili.minequiz.api.MineQuizAPI;
 import dev.onelili.minequiz.command.QuizAnswerCommand;
 import dev.onelili.minequiz.command.QuizCommand;
+import dev.onelili.minequiz.command.QuizScoreCommand;
 import dev.onelili.minequiz.config.QuestionBank;
 import dev.onelili.minequiz.config.QuizConfig;
 import dev.onelili.minequiz.game.QuizManager;
@@ -24,6 +25,7 @@ public final class MineQuiz extends JavaPlugin {
     private LangUtil lang;
     private QuizCommand commandExecutor;
     private QuizAnswerCommand answerCommandExecutor;
+    private QuizScoreCommand scoreCommandExecutor;
     private final AtomicBoolean operational = new AtomicBoolean();
 
     @Override
@@ -57,6 +59,14 @@ public final class MineQuiz extends JavaPlugin {
             PluginCommand answerCmd = getCommand("quizanswer");
             if (answerCmd != null) {
                 answerCmd.setExecutor(answerCommandExecutor);
+            }
+
+            // 注册分数管理命令 /quizscore
+            scoreCommandExecutor = new QuizScoreCommand(this);
+            PluginCommand scoreCmd = getCommand("quizscore");
+            if (scoreCmd != null) {
+                scoreCmd.setExecutor(scoreCommandExecutor);
+                scoreCmd.setTabCompleter(scoreCommandExecutor);
             }
 
             // 初始化管理器
@@ -103,9 +113,15 @@ public final class MineQuiz extends JavaPlugin {
         if (answer != null) {
             answer.setExecutor(null);
         }
+        PluginCommand score = getCommand("quizscore");
+        if (score != null) {
+            score.setExecutor(null);
+            score.setTabCompleter(null);
+        }
 
         commandExecutor = null;
         answerCommandExecutor = null;
+        scoreCommandExecutor = null;
         questionBank = null;
         quizConfig = null;
         lang = null;

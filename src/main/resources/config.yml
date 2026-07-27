@@ -20,3 +20,6 @@ quiz-points: 5
 
 # 开启答题的最低在线玩家数（少于该人数则跳过本轮）
 min-players: 1
+
+# 是否在控制台输出发送给玩家的消息
+log-to-console: true

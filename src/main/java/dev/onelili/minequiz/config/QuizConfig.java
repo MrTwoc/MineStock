@@ -16,6 +16,7 @@ public class QuizConfig {
     private int racePoints;
     private int quizPoints;
     private int minPlayers;
+    private boolean logToConsole;
 
     public QuizConfig(MineQuiz plugin) {
         this.plugin = plugin;
@@ -34,6 +35,7 @@ public class QuizConfig {
         racePoints = cfg.getInt("race-points", 10);
         quizPoints = cfg.getInt("quiz-points", 5);
         minPlayers = cfg.getInt("min-players", 2);
+        logToConsole = cfg.getBoolean("log-to-console", true);
     }
 
     /** 每轮题目数量 */
@@ -50,4 +52,6 @@ public class QuizConfig {
     public int getQuizPoints() { return quizPoints; }
     /** 开启答题的最低在线玩家数 */
     public int getMinPlayers() { return minPlayers; }
+    /** 是否在控制台输出发送给玩家的消息 */
+    public boolean isLogToConsole() { return logToConsole; }
 }

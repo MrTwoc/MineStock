@@ -77,12 +77,20 @@ public class LangUtil {
 
     public void broadcast(String key, String... kvPairs) {
         String raw = prefix + replacePairs(getRaw(key), kvPairs);
-        MineQuiz.getInstance().getServer().broadcast(MM.deserialize(raw));
+        MineQuiz plugin = MineQuiz.getInstance();
+        plugin.getServer().broadcast(MM.deserialize(raw));
+        if (plugin.getQuizConfig().isLogToConsole()) {
+            plugin.getLogger().info(MiniMessage.miniMessage().stripTags(raw));
+        }
     }
 
     public void broadcastNoPrefix(String key, String... kvPairs) {
         String raw = replacePairs(getRaw(key), kvPairs);
-        MineQuiz.getInstance().getServer().broadcast(MM.deserialize(raw));
+        MineQuiz plugin = MineQuiz.getInstance();
+        plugin.getServer().broadcast(MM.deserialize(raw));
+        if (plugin.getQuizConfig().isLogToConsole()) {
+            plugin.getLogger().info(MiniMessage.miniMessage().stripTags(raw));
+        }
     }
 
     private String replacePairs(String raw, String[] kvPairs) {

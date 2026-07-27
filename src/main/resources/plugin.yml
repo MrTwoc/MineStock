@@ -13,10 +13,14 @@ commands:
   quizanswer:
     description: 内部答题命令（请通过聊天框点击选项作答）
     usage: /quizanswer <题号> <选项索引>
+  quizscore:
+    description: 查询/修改玩家知识竞赛分数
+    usage: /quizscore <玩家> [add|remove|set] <数值>
+    permission: minequiz.admin
 permissions:
   minequiz.use:
     description: 允许参与知识竞赛
     default: true
   minequiz.admin:
-    description: 允许管理知识竞赛（强制开始、重载题库等）
+    description: 允许管理知识竞赛（强制开始、重载题库、管理分数等）
     default: op

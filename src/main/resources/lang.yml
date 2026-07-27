@@ -6,6 +6,13 @@ quiz-usage: |
   <gray>/quiz start</gray>   <green>- 立即开始新一轮问答</green>
   <gray>/quiz reload</gray>  <green>- 重载配置文件和题库</green>
 
+quizscore-usage:            "<gold>用法: /quizscore <玩家> [add|remove|set] <数值></gold>"
+quizscore-player-not-found: "<red>未找到玩家 {player}</red>"
+quizscore-invalid-amount:   "<red>无效的数值: {amount}</red>"
+quizscore-query:            "<green>玩家 {player} 当前分数: {score}</green>"
+quizscore-add:              "<green>已为 {player} 增加 {amount} 分，当前分数: {score}</green>"
+quizscore-remove:           "<green>已为 {player} 扣除 {amount} 分，当前分数: {score}</green>"
+quizscore-set:              "<green>已将 {player} 的分数设为 {score}</green>"
 quiz-start:          "<green>管理员 {player} 手动开启了新一轮知识竞赛！</green>"
 quiz-reloaded:      "<green>配置文件和题库已重载！共加载 {count} 道题目。</green>"
 round-start:        "<gold>⚔️ 新的一轮开始！本轮共 {count} 道题</gold>"

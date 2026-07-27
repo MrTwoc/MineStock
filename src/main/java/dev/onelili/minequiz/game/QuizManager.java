@@ -238,6 +238,15 @@ public class QuizManager {
         return scores.getOrDefault(playerUuid, 0);
     }
 
+    /**
+     * 直接设置指定玩家的分数并持久化
+     */
+    public void setScore(UUID playerUuid, int newScore) {
+        if (newScore < 0) newScore = 0;
+        scores.put(playerUuid, newScore);
+        database.saveScore(playerUuid, newScore);
+    }
+
     public Map<UUID, Integer> getScores() {
         return Map.copyOf(scores);
     }
