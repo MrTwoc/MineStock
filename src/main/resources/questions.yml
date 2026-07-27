@@ -1,0 +1,406 @@
+# MineQuiz 题库配置文件
+# type: RACE - 抢答题（仅第一位答对者得分）
+#       QUIZ - 问答题（所有答对者均得分）
+# answer: 正确选项索引（从 0 开始）
+# category: 题目分类
+
+questions:
+  # ── 天文地理 ──────────────────────────────────────────────
+  - id: 1
+    type: RACE
+    category: 天文地理
+    question: "太阳系中最大的行星是？"
+    options:
+      - "地球"
+      - "木星"
+      - "土星"
+      - "天王星"
+    answer: 1
+
+  - id: 2
+    type: QUIZ
+    category: 天文地理
+    question: "地球的天然卫星是什么？"
+    options:
+      - "太阳"
+      - "月球"
+      - "火星"
+      - "金星"
+    answer: 1
+
+  - id: 3
+    type: RACE
+    category: 天文地理
+    question: "光年是衡量什么的单位？"
+    options:
+      - "时间"
+      - "速度"
+      - "距离"
+      - "亮度"
+    answer: 2
+
+  - id: 4
+    type: QUIZ
+    category: 天文地理
+    question: "被称为「世界屋脊」的是哪个高原？"
+    options:
+      - "云贵高原"
+      - "青藏高原"
+      - "内蒙古高原"
+      - "黄土高原"
+    answer: 1
+
+  - id: 5
+    type: RACE
+    category: 天文地理
+    question: "世界上面积最大的国家是？"
+    options:
+      - "中国"
+      - "美国"
+      - "加拿大"
+      - "俄罗斯"
+    answer: 3
+
+  - id: 6
+    type: QUIZ
+    category: 天文地理
+    question: "太阳系中离太阳最近的行星是？"
+    options:
+      - "水星"
+      - "金星"
+      - "地球"
+      - "火星"
+    answer: 0
+
+  - id: 7
+    type: RACE
+    category: 天文地理
+    question: "赤道穿过的大洲有几个？"
+    options:
+      - "2个"
+      - "3个"
+      - "4个"
+      - "5个"
+    answer: 1
+
+  - id: 8
+    type: QUIZ
+    category: 天文地理
+    question: "世界上最大的海洋是？"
+    options:
+      - "大西洋"
+      - "印度洋"
+      - "太平洋"
+      - "北冰洋"
+    answer: 2
+
+  # ── 人文历史 ──────────────────────────────────────────────
+  - id: 9
+    type: RACE
+    category: 人文历史
+    question: "中国历史上第一个统一的封建王朝是？"
+    options:
+      - "周朝"
+      - "商朝"
+      - "秦朝"
+      - "汉朝"
+    answer: 2
+
+  - id: 10
+    type: QUIZ
+    category: 人文历史
+    question: "二战中诺曼底登陆发生在哪一年？"
+    options:
+      - "1943年"
+      - "1944年"
+      - "1945年"
+      - "1942年"
+    answer: 1
+
+  - id: 11
+    type: RACE
+    category: 人文历史
+    question: "\"文艺复兴\"运动最早起源于哪个国家？"
+    options:
+      - "法国"
+      - "英国"
+      - "意大利"
+      - "西班牙"
+    answer: 2
+
+  - id: 12
+    type: QUIZ
+    category: 人文历史
+    question: "《红楼梦》的作者是谁？"
+    options:
+      - "罗贯中"
+      - "施耐庵"
+      - "吴承恩"
+      - "曹雪芹"
+    answer: 3
+
+  - id: 13
+    type: RACE
+    category: 人文历史
+    question: "古埃及最大的金字塔是？"
+    options:
+      - "哈夫拉金字塔"
+      - "胡夫金字塔"
+      - "门卡乌拉金字塔"
+      - "红色金字塔"
+    answer: 1
+
+  - id: 14
+    type: QUIZ
+    category: 人文历史
+    question: "第一次世界大战爆发的导火索是？"
+    options:
+      - "卢西塔尼亚号事件"
+      - "萨拉热窝事件"
+      - "巴尔干战争"
+      - "摩洛哥危机"
+    answer: 1
+
+  - id: 15
+    type: RACE
+    category: 人文历史
+    question: "\"丝绸之路\"最早开辟于哪个朝代？"
+    options:
+      - "秦朝"
+      - "汉朝"
+      - "唐朝"
+      - "宋朝"
+    answer: 1
+
+  - id: 16
+    type: QUIZ
+    category: 人文历史
+    question: "美国独立宣言签署于哪一年？"
+    options:
+      - "1774年"
+      - "1775年"
+      - "1776年"
+      - "1777年"
+    answer: 2
+
+  # ── 计算机与数学 ──────────────────────────────────────────
+  - id: 17
+    type: RACE
+    category: 计算机与数学
+    question: "计算机中 1GB 等于多少 MB？"
+    options:
+      - "100"
+      - "512"
+      - "1000"
+      - "1024"
+    answer: 3
+
+  - id: 18
+    type: QUIZ
+    category: 计算机与数学
+    question: "Python 中用于输出信息的内置函数是？"
+    options:
+      - "print()"
+      - "echo()"
+      - "write()"
+      - "output()"
+    answer: 0
+
+  - id: 19
+    type: RACE
+    category: 计算机与数学
+    question: "圆的面积公式是？"
+    options:
+      - "2πr"
+      - "πr²"
+      - "πd"
+      - "4πr²"
+    answer: 1
+
+  - id: 20
+    type: QUIZ
+    category: 计算机与数学
+    question: "HTTP 状态码 404 表示什么？"
+    options:
+      - "服务器错误"
+      - "未授权"
+      - "页面未找到"
+      - "请求超时"
+    answer: 2
+
+  - id: 21
+    type: RACE
+    category: 计算机与数学
+    question: "Minecraft 中红石粉的最大传输距离是？"
+    options:
+      - "10格"
+      - "15格"
+      - "20格"
+      - "无限"
+    answer: 1
+
+  - id: 22
+    type: QUIZ
+    category: 计算机与数学
+    question: "以下哪种是关系型数据库？"
+    options:
+      - "Redis"
+      - "MongoDB"
+      - "MySQL"
+      - "Elasticsearch"
+    answer: 2
+
+  - id: 23
+    type: RACE
+    category: 计算机与数学
+    question: "32 的二进制表示是？"
+    options:
+      - "10000"
+      - "100000"
+      - "1000000"
+      - "10000000"
+    answer: 1
+
+  - id: 24
+    type: QUIZ
+    category: 计算机与数学
+    question: "Java 编程语言中，main 方法的返回类型是？"
+    options:
+      - "int"
+      - "String"
+      - "void"
+      - "boolean"
+    answer: 2
+
+  - id: 25
+    type: RACE
+    category: 计算机与数学
+    question: "一个正方体有几个顶点？"
+    options:
+      - "4"
+      - "6"
+      - "8"
+      - "12"
+    answer: 2
+
+  - id: 26
+    type: QUIZ
+    category: 计算机与数学
+    question: "操作系统中的「进程」与「线程」相比，哪个更轻量？"
+    options:
+      - "进程"
+      - "线程"
+      - "一样重"
+      - "无法比较"
+    answer: 1
+
+  # ── 现代基础知识 ──────────────────────────────────────────
+  - id: 27
+    type: RACE
+    category: 现代基础知识
+    question: "人体最大的器官是？"
+    options:
+      - "心脏"
+      - "肝脏"
+      - "皮肤"
+      - "大脑"
+    answer: 2
+
+  - id: 28
+    type: QUIZ
+    category: 现代基础知识
+    question: "DNA 的双螺旋结构由谁发现？"
+    options:
+      - "达尔文"
+      - "牛顿"
+      - "爱因斯坦"
+      - "沃森和克里克"
+    answer: 3
+
+  - id: 29
+    type: RACE
+    category: 现代基础知识
+    question: "世界上最长的河流是？"
+    options:
+      - "长江"
+      - "亚马逊河"
+      - "尼罗河"
+      - "密西西比河"
+    answer: 2
+
+  - id: 30
+    type: QUIZ
+    category: 现代基础知识
+    question: "光速在真空中约为多少？"
+    options:
+      - "3×10⁶ m/s"
+      - "3×10⁷ m/s"
+      - "3×10⁸ m/s"
+      - "3×10⁹ m/s"
+    answer: 2
+
+  - id: 31
+    type: RACE
+    category: 现代基础知识
+    question: "水的沸点在标准大气压下为多少摄氏度？"
+    options:
+      - "90°C"
+      - "100°C"
+      - "110°C"
+      - "120°C"
+    answer: 1
+
+  - id: 32
+    type: QUIZ
+    category: 现代基础知识
+    question: "人类最早驯化的动物是？"
+    options:
+      - "牛"
+      - "马"
+      - "狗"
+      - "鸡"
+    answer: 2
+
+  - id: 33
+    type: RACE
+    category: 现代基础知识
+    question: "汽车的发明者通常被认为是？"
+    options:
+      - "福特"
+      - "奔驰"
+      - "爱迪生"
+      - "瓦特"
+    answer: 1
+
+  - id: 34
+    type: QUIZ
+    category: 现代基础知识
+    question: "世界卫生组织的简称是？"
+    options:
+      - "WHO"
+      - "WTO"
+      - "WMO"
+      - "UNESCO"
+    answer: 0
+
+  - id: 35
+    type: RACE
+    category: 现代基础知识
+    question: "一年中哪个月份天数最少？"
+    options:
+      - "1月"
+      - "2月"
+      - "6月"
+      - "11月"
+    answer: 1
+
+  - id: 36
+    type: QUIZ
+    category: 现代基础知识
+    question: "诺贝尔奖不包括以下哪个领域？"
+    options:
+      - "物理"
+      - "化学"
+      - "数学"
+      - "和平"
+    answer: 2

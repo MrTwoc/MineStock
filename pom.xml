@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.onelili.mstock</groupId>
-    <artifactId>MineStock</artifactId>
-    <version>1.2.3</version>
+    <groupId>dev.onelili.minequiz</groupId>
+    <artifactId>MineQuiz</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>MineStock</name>
+    <name>MineQuiz</name>
+    <description>知识竞赛问答插件 - 自动出题，抢答/问答积分</description>
 
     <properties>
         <java.version>21</java.version>
@@ -41,9 +42,6 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>dev.onelili.mstock.MineStock</mainClass>
-                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>
@@ -63,10 +61,6 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -77,21 +71,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.45.3.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

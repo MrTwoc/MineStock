@@ -1,42 +1,19 @@
-# 推荐池可写成股票代码列表：
-# recommended-pool:
-#   - "000001"
-#   - "600519"
-#   - "AAPL"
-# 也可写成 auto，由插件每天从沪深 A 股市场自动选股：recommended-pool: auto
-recommended-pool:
-  - "000001"
-  - "600519"
-  - "000858"
-  - "AAPL"
-  - "TSLA"
-  - "MSFT"
-recommended-count: 3
+# MineQuiz 知识竞赛插件配置文件
 
-# auto 模式拉取并参与评分的候选数量，范围为 recommended-count ~ 500
-auto-candidate-count: 100
+# 定时问答间隔（分钟）
+quiz-interval: 5
 
-# MineStock 告示牌行情刷新周期（秒，最小 30）
-sign-refresh-seconds: 300
+# 每题答题时间（秒）
+answer-time: 30
 
-# 操作冷却时间（毫秒），旧配置 api-cooldown-seconds 仍兼容
-api-cooldown-ms: 1000
+# 抢答题每题得分
+race-points: 10
 
-price-ratio: 1.0
+# 问答题（不限人数）每题得分
+quiz-points: 5
 
-# 交易手续费费率（百分比），默认 0.5%，设为 0 表示免手续费
-transaction-fee-percent: 0.5
+# 两轮之间间隔（秒）
+between-rounds-delay: 15
 
-# K线数据缓存时间（毫秒），默认 5 分钟
-kline-cache-ms: 300000
-
-# 美股 API 配置（按优先级排列，失败自动切换）
-# apikeys 支持多个 key，请求会均匀分配到每个 key（round-robin）
-# 兼容旧格式：若只填写 apikey（单项），会自动当作单元素列表处理
-us-stock-apis:
-  - name: finnhub
-    apikeys:
-      - ""
-  - name: twelvedata
-    apikeys:
-      - ""
+# 开启答题的最低在线玩家数（少于该人数则跳过自动出题）
+min-players: 2

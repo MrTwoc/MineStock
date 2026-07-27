@@ -1,58 +1,40 @@
-prefix: "<dark_gray>[</dark_gray><gold><bold>MineStock</bold></gold><dark_gray>]</dark_gray> "
-no-permission: "<red>✗ 你没有权限执行此命令。</red>"
-vault-not-found: "<red>✗ 未找到经济插件，请确认已安装 Vault 及经济插件。</red>"
+prefix: "<gold>[MineQuiz]</gold> "
 
-recommend-header: "<gold>▍今日推荐</gold> <dark_gray>─────────────────</dark_gray>"
-recommend-item-up: "  <click:run_command:'/mstock {code}'><hover:show_text:'<gray>点击查看 {code} 详情</gray>'><aqua>{code}</aqua></hover></click> <gray>{name}</gray>  <white>{price}</white> <dark_gray>金币</dark_gray>  <red>▲ +{change}%</red>"
-recommend-item-down: "  <click:run_command:'/mstock {code}'><hover:show_text:'<gray>点击查看 {code} 详情</gray>'><aqua>{code}</aqua></hover></click> <gray>{name}</gray>  <white>{price}</white> <dark_gray>金币</dark_gray>  <green>▼ -{change}%</green>"
-recommend-hint: "<dark_gray>─────────────────────────────</dark_gray>"
+# ── 命令 ────────────────────────────────────────────────────
+quiz-usage: |
+  <gold>===== MineQuiz 知识竞赛 =====</gold>
+  <gray>/quiz start</gray>   <green>- 立即开始新一轮问答</green>
+  <gray>/quiz reload</gray>  <green>- 重载配置文件和题库</green>
 
-stock-header: "<gold>▍{name}</gold> <dark_gray>({code})</dark_gray>"
-stock-price-up: "  <dark_gray>价格</dark_gray>  <white>{price}</white> <dark_gray>金币</dark_gray>   <red>▲ +{change}%</red>"
-stock-price-down: "  <dark_gray>价格</dark_gray>  <white>{price}</white> <dark_gray>金币</dark_gray>   <green>▼ -{change}%</green>"
-stock-header-up: "<gold>▍{name}</gold> <dark_gray>({code})</dark_gray>   <white>{price}</white> <dark_gray>金币</dark_gray>  <red>▲ +{change}%</red>"
-stock-header-down: "<gold>▍{name}</gold> <dark_gray>({code})</dark_gray>   <white>{price}</white> <dark_gray>金币</dark_gray>  <green>▼ -{change}%</green>"
-stock-actions: "  <click:run_command:'/mstock _buy_init {code}'><hover:show_text:'<gray>买入 {code}</gray>'><green>[ 买入 ]</green></hover></click>   <click:run_command:'/mstock _sell_init {code}'><hover:show_text:'<gray>卖出 {code}</gray>'><red>[ 卖出 ]</red></hover></click>"
+quiz-start:          "<green>管理员 {player} 手动开启了新一轮知识竞赛！</green>"
+quiz-reloaded:      "<green>配置文件和题库已重载！共加载 {count} 道题目。</green>"
+no-questions:       "<red>题库为空或全部已用完，请添加题目！</red>"
 
-kline-loading: "  <gray>K线加载中…</gray>"
-kline-error: "  <red>✗ K线数据获取失败，请稍后重试。</red>"
-kline-current-period: "  <dark_gray>当前周期</dark_gray>  <white>{days}</white> <dark_gray>天</dark_gray>"
-kline-period-bar: "  {btn_1m}  {btn_3m}  {btn_1y}"
+# ── 抢答题 ──────────────────────────────────────────────────
+race-announce: |
+  <gold>⚡ 抢答题</gold> <gray>[{category}]</gray>
+  <yellow>{question}</yellow>
 
-portfolio-header: "<gold>▍我的持仓</gold> <dark_gray>─────────────────</dark_gray>"
-portfolio-empty: "<gray>  暂无持仓，</gray><click:run_command:'/mstock recommended'><hover:show_text:'<gray>查看今日推荐</gray>'><white>/mstock recommended</white></hover></click><gray> 查看推荐股票。</gray>"
-portfolio-item-up: "  <click:run_command:'/mstock {code}'><hover:show_text:'<gray>点击查看 {code} 详情</gray>'><aqua>{code}</aqua> <gray>{name}</gray></hover></click>  <white>{amount}</white><dark_gray>股</dark_gray>  <dark_gray>买入均价</dark_gray> <white>{avg_cost}</white>  <dark_gray>现价</dark_gray> <white>{price}</white>  <red>▲ +{change}%</red>  <click:run_command:'/mstock _sell_init {code}'><hover:show_text:'<gray>卖出 {code}</gray>'><red>[ 卖出 ]</red></hover></click>"
-portfolio-item-down: "  <click:run_command:'/mstock {code}'><hover:show_text:'<gray>点击查看 {code} 详情</gray>'><aqua>{code}</aqua> <gray>{name}</gray></hover></click>  <white>{amount}</white><dark_gray>股</dark_gray>  <dark_gray>买入均价</dark_gray> <white>{avg_cost}</white>  <dark_gray>现价</dark_gray> <white>{price}</white>  <green>▼ -{change}%</green>  <click:run_command:'/mstock _sell_init {code}'><hover:show_text:'<gray>卖出 {code}</gray>'><red>[ 卖出 ]</red></hover></click>"
+race-correct-first: "<gold>{player}</gold><green> 抢答正确！获得 {points} 分！</green>"
+race-incorrect:     "<red>{player} 回答错误！</red>"
+race-wrong-order:   "<gray>已有人答对，本题抢答结束！</gray>"
+race-timeout:       "<red>抢答题时间到！正确答案是：{answer}</red>"
 
-buy-prompt: "买入 <aqua>{code}</aqua>  <dark_gray>当前价格</dark_gray> <white>{price}</white> <dark_gray>金币/股</dark_gray>  请输入股数 <dark_gray>（输入 cancel 退出）</dark_gray>："
-sell-prompt: "卖出 <aqua>{code}</aqua>  <dark_gray>当前价格</dark_gray> <white>{price}</white> <dark_gray>金币/股</dark_gray>  请输入股数 <dark_gray>（输入 cancel 退出）</dark_gray>："
-input-cancelled: "<gray>  已取消。</gray>"
-input-invalid: "<red>✗ 请输入正整数。</red>"
+# ── 问答题 ──────────────────────────────────────────────────
+quiz-announce: |
+  <aqua>📝 问答题</aqua> <gray>[{category}]</gray>
+  <yellow>{question}</yellow>
 
-buy-confirm: "  <dark_gray>股价</dark_gray> <white>{unit_price}</white>  × <white>{amount}</white> 股  =  <white>{subtotal}</white>  <dark_gray>手续费</dark_gray> <yellow>{fee}</yellow>  <dark_gray>合计</dark_gray> <white>{total}</white> <dark_gray>金币</dark_gray>"
-sell-confirm: "  <dark_gray>股价</dark_gray> <white>{unit_price}</white>  × <white>{amount}</white> 股  =  <white>{subtotal}</white>  <dark_gray>手续费</dark_gray> <yellow>{fee}</yellow>  <dark_gray>到账</dark_gray> <white>{income}</white> <dark_gray>金币</dark_gray>"
-buy-success: "<green>✔ 买入成功</green>"
-sell-success: "<green>✔ 卖出成功</green>"
-not-enough-money: "<red>✗ 余额不足</red>  需要 <white>{need}</white> 金币，当前余额 <white>{balance}</white> 金币"
-not-enough-holding: "<red>✗ 持仓不足</red>  持有 <white>{hold}</white> 股，无法卖出 <white>{amount}</white> 股"
-no-holding: "<red>✗ 你没有持仓 <aqua>{code}</aqua></red>"
-unsupported-code: "<red>✗ 不支持的股票代码 <aqua>{code}</aqua>，A 股请输入 6 位数字，美股请输入英文代码。</red>"
+quiz-correct:   "<green>回答正确！{player} 获得 {points} 分！</green>"
+quiz-incorrect: "<red>{player} 回答错误！</red>"
+quiz-duplicate: "<gray>{player} 你已经回答过本题了！</gray>"
+quiz-timeout:   "<red>问答题时间到！正确答案是：{answer}</red>"
 
-api-cooldown: "<gray>  请等待 <white>{seconds}</white> 后再操作。</gray>"
-api-error: "<red>✗ 获取行情失败，请稍后重试。</red>"
-api-fetching: "<gray>  正在获取 <aqua>{code}</aqua> 的实时行情…</gray>"
-
-db-error: "<red>✗ 数据库操作失败，已回滚。</red>"
-
-reload-success: "<green>✔ 配置已重载。</green>"
-reload-no-permission: "<red>✗ 需要 minestock.admin 权限。</red>"
-
-usage: |
-  <gold>▍MineStock</gold> <dark_gray>─────────────────────────</dark_gray>
-  <click:run_command:'/mstock recommended'><hover:show_text:'<gray>查看今日推荐股票</gray>'><white>/mstock recommended</white></hover></click>  <dark_gray>今日推荐股票</dark_gray>
-  <white>/mstock <代码></white>                <dark_gray>查询股票实时行情</dark_gray>
-  <click:run_command:'/mstock buy '><hover:show_text:'<gray>/mstock buy &lt;代码&gt; &lt;数量&gt;</gray>'><white>/mstock buy <代码> <数量></white></hover></click>   <dark_gray>买入股票</dark_gray>
-  <click:run_command:'/mstock sell '><hover:show_text:'<gray>/mstock sell &lt;代码&gt; &lt;数量&gt;</gray>'><white>/mstock sell <代码> <数量></white></hover></click>  <dark_gray>卖出股票</dark_gray>
-  <click:run_command:'/mstock portfolio'><hover:show_text:'<gray>查看我的持仓</gray>'><white>/mstock portfolio</white></hover></click>          <dark_gray>我的持仓</dark_gray>
-  <click:run_command:'/mstock reload'><hover:show_text:'<gray>重载配置文件（需要权限）</gray>'><white>/mstock reload</white></hover></click>             <dark_gray>重载配置（需要权限）</dark_gray>
-  <dark_gray>─────────────────────────────────</dark_gray>
+# ── 通用 ────────────────────────────────────────────────────
+answer-hint:     "<gray>聊天框点击选项即可作答：</gray>"
+personal-score:  "<gray>当前总分: {score}</gray>"
+waiting-next:    "<gold>⏰ {seconds} 秒后将出现下一题！</gold>"
+quiz-ended:      "<gold>===== 本轮知识竞赛结束！感谢参与！=====</gold>"
+no-permission:   "<red>你没有权限执行此操作</red>"
+only-player:     "<red>该命令只能由玩家执行</red>"
+not-enough-players: "<red>在线玩家不足 {min} 人，跳过本轮自动问答</red>"
