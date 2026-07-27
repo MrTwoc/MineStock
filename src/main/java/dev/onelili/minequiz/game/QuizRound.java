@@ -41,6 +41,8 @@ public class QuizRound {
     private UUID firstCorrectPlayer;
 
     private volatile boolean active = true;
+    /** 防止 endRound 被重复调用 */
+    private boolean ended;
 
     public QuizRound(MineQuiz plugin, Question question, int answerTimeSeconds, int points,
                      QuestionType randomizedType, Runnable onEnd) {
@@ -99,6 +101,9 @@ public class QuizRound {
 
     /**
      * 玩家提交答案（每人每轮仅限一次）
+     * <p>
+     * 抢答题：选中正确答案即立即结束本题，公布结果；答错则记录但不影响其他玩家继续抢答。
+     * 问答题：答题时间结束后统一公布结果。
      */
     public SubmitResult submitAnswer(UUID playerUuid, int optionIndex) {
         if (!active) return SubmitResult.ROUND_ENDED;
@@ -110,13 +115,17 @@ public class QuizRound {
             return SubmitResult.WRONG;
         }
 
-        // 回答正确
         allCorrectPlayers.add(playerUuid);
 
-        if (randomizedType == QuestionType.RACE && firstCorrectPlayer == null) {
+        if (randomizedType == QuestionType.RACE) {
             firstCorrectPlayer = playerUuid;
+            // 抢答题：有人答对立即结束，延迟 1 tick 保证调用链返回后再执行 endRound
+            active = false;
+            plugin.getServer().getScheduler().runTaskLater(plugin, this::endRound, 1);
+            return SubmitResult.CORRECT;
         }
 
+        // 问答题：仅记录，等时间到统一公布
         return SubmitResult.CORRECT;
     }
 
@@ -124,6 +133,8 @@ public class QuizRound {
      * 结束本题，公布正确答案和答对玩家
      */
     private void endRound() {
+        if (ended) return;
+        ended = true;
         List<String> options = question.getOptions();
         int correctIdx = question.getAnswer();
         char correctLabel = (char) ('A' + correctIdx);
