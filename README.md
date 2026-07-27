@@ -1,5 +1,6 @@
 # MineQuiz
 
+本插件基于另一个开源插件fork修改而来：https://github.com/oneHerobrine/MineStock
 一个 Minecraft Paper 服务器知识竞赛问答插件，支持轮次自动出题、抢答/问答双模式、分数持久化与后台日志开关。
 适用MC 26.1.2 服务器，支持 Paper 服务器，其他版本未经测试。
 
