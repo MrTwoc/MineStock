@@ -78,18 +78,40 @@ public class LangUtil {
     public void broadcast(String key, String... kvPairs) {
         String raw = prefix + replacePairs(getRaw(key), kvPairs);
         MineQuiz plugin = MineQuiz.getInstance();
-        plugin.getServer().broadcast(MM.deserialize(raw));
+        Component component = MM.deserialize(raw);
         if (plugin.getQuizConfig().isLogToConsole()) {
-            plugin.getLogger().info(MiniMessage.miniMessage().stripTags(raw));
+            plugin.getServer().broadcast(component);
+        } else {
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                player.sendMessage(component);
+            }
         }
     }
 
     public void broadcastNoPrefix(String key, String... kvPairs) {
         String raw = replacePairs(getRaw(key), kvPairs);
         MineQuiz plugin = MineQuiz.getInstance();
-        plugin.getServer().broadcast(MM.deserialize(raw));
+        Component component = MM.deserialize(raw);
         if (plugin.getQuizConfig().isLogToConsole()) {
-            plugin.getLogger().info(MiniMessage.miniMessage().stripTags(raw));
+            plugin.getServer().broadcast(component);
+        } else {
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                player.sendMessage(component);
+            }
+        }
+    }
+
+    /**
+     * 广播一个已经构造好的 Component 对象，受 log-to-console 控制
+     */
+    public void broadcastComponent(Component component) {
+        MineQuiz plugin = MineQuiz.getInstance();
+        if (plugin.getQuizConfig().isLogToConsole()) {
+            plugin.getServer().broadcast(component);
+        } else {
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                player.sendMessage(component);
+            }
         }
     }
 

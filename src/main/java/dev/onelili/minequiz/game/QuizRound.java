@@ -59,7 +59,6 @@ public class QuizRound {
      */
     public void start() {
         var lang = plugin.getLang();
-        var server = plugin.getServer();
 
         // 广播题目头（使用随机分配的类型）
         if (randomizedType == QuestionType.RACE) {
@@ -73,7 +72,7 @@ public class QuizRound {
         }
 
         // 广播选项（可点击）
-        server.broadcast(lang.getNoPrefix("answer-hint"));
+        lang.broadcastComponent(lang.getNoPrefix("answer-hint"));
         List<String> options = question.getOptions();
 
         var line = Component.text("  ");
@@ -89,7 +88,7 @@ public class QuizRound {
                     .clickEvent(ClickEvent.runCommand(clickCommand));
             line = line.append(optionComponent);
         }
-        server.broadcast(line);
+        lang.broadcastComponent(line);
 
         // 定时结束
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
