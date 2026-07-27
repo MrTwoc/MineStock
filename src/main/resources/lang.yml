@@ -8,6 +8,7 @@ quiz-usage: |
 
 quiz-start:          "<green>管理员 {player} 手动开启了新一轮知识竞赛！</green>"
 quiz-reloaded:      "<green>配置文件和题库已重载！共加载 {count} 道题目。</green>"
+round-start:        "<gold>⚔️ 新的一轮开始！本轮共 {count} 道题</gold>"
 no-questions:       "<red>题库为空或全部已用完，请添加题目！</red>"
 
 # ── 抢答题 ──────────────────────────────────────────────────
@@ -15,6 +16,7 @@ race-announce: |
   <gold>⚡ 抢答题</gold> <gray>[{category}]</gray>
   <yellow>{question}</yellow>
 
+race-answer:        "<green>抢答题正确答案：{answer}</green>"
 race-correct-first: "<gold>{player}</gold><green> 抢答正确！获得 {points} 分！</green>"
 race-incorrect:     "<red>{player} 回答错误！</red>"
 race-wrong-order:   "<gray>已有人答对，本题抢答结束！</gray>"
@@ -25,6 +27,7 @@ quiz-announce: |
   <aqua>📝 问答题</aqua> <gray>[{category}]</gray>
   <yellow>{question}</yellow>
 
+quiz-answer:    "<green>问答题正确答案：{answer}</green>"
 quiz-correct:   "<green>回答正确！{player} 获得 {points} 分！</green>"
 quiz-incorrect: "<red>{player} 回答错误！</red>"
 quiz-duplicate: "<gray>{player} 你已经回答过本题了！</gray>"
@@ -32,6 +35,8 @@ quiz-timeout:   "<red>问答题时间到！正确答案是：{answer}</red>"
 
 # ── 通用 ────────────────────────────────────────────────────
 answer-hint:     "<gray>聊天框点击选项即可作答：</gray>"
+answer-submitted: "<gray>答案已提交，请等待答题时间结束</gray>"
+already-answered: "<gray>你已经回答过本题了</gray>"
 personal-score:  "<gray>当前总分: {score}</gray>"
 waiting-next:    "<gold>⏰ {seconds} 秒后将出现下一题！</gold>"
 quiz-ended:      "<gold>===== 本轮知识竞赛结束！感谢参与！=====</gold>"

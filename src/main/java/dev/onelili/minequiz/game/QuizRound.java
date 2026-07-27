@@ -9,28 +9,47 @@ import net.kyori.adventure.text.format.TextDecoration;
 import java.util.*;
 
 /**
- * 单轮问答游戏 — 管理一道题目的出题、作答、计时
+ * 单道题目的问答环节 — 管理一道题目的出题、作答、计时
  */
 public class QuizRound {
 
+    public enum SubmitResult {
+        /** 答案正确，已记录 */
+        CORRECT,
+        /** 答案错误，已记录 */
+        WRONG,
+        /** 该玩家已经提交过答案 */
+        ALREADY_SUBMITTED,
+        /** 本轮答题已结束 */
+        ROUND_ENDED
+    }
+
     private final MineQuiz plugin;
     private final Question question;
+    /** 随机分配的题目类型（不再使用 Question.type） */
+    private final QuestionType randomizedType;
     private final int answerTimeSeconds;
     private final int points;
+    /** 本道题结束后的回调（用于管理器启动下一题） */
+    private final Runnable onEnd;
 
-    // 抢答题：已有人答对
-    private boolean answered;
-    // 问答题：已作答的玩家
-    private final Set<UUID> answeredPlayers = new HashSet<>();
+    /** 已提交答案的所有玩家（无论对错，用于"每人一次"限制） */
+    private final Set<UUID> allSubmissions = new HashSet<>();
+    /** 答对本题的玩家 */
+    private final Set<UUID> allCorrectPlayers = new HashSet<>();
+    /** 抢答题：最先答对的玩家 */
+    private UUID firstCorrectPlayer;
 
-    // 本题当前状态
     private volatile boolean active = true;
 
-    public QuizRound(MineQuiz plugin, Question question, int answerTimeSeconds, int points) {
+    public QuizRound(MineQuiz plugin, Question question, int answerTimeSeconds, int points,
+                     QuestionType randomizedType, Runnable onEnd) {
         this.plugin = plugin;
         this.question = question;
         this.answerTimeSeconds = answerTimeSeconds;
         this.points = points;
+        this.randomizedType = randomizedType;
+        this.onEnd = onEnd;
     }
 
     /**
@@ -40,8 +59,8 @@ public class QuizRound {
         var lang = plugin.getLang();
         var server = plugin.getServer();
 
-        // 广播题目头
-        if (question.getType() == QuestionType.RACE) {
+        // 广播题目头（使用随机分配的类型）
+        if (randomizedType == QuestionType.RACE) {
             lang.broadcast("race-announce",
                     "category", question.getCategory(),
                     "question", question.getQuestion());
@@ -54,16 +73,7 @@ public class QuizRound {
         // 广播选项（可点击）
         server.broadcast(lang.getNoPrefix("answer-hint"));
         List<String> options = question.getOptions();
-        var labelBuilder = new StringBuilder();
-        for (int i = 0; i < options.size(); i++) {
-            if (i > 0) labelBuilder.append("   ");
-            // 使用字母标签 A/B/C/D...
-            char label = (char) ('A' + i);
-            labelBuilder.append(label).append(". ").append(options.get(i));
-        }
-        String labels = labelBuilder.toString();
 
-        // 构造可点击选项行
         var line = Component.text("  ");
         for (int i = 0; i < options.size(); i++) {
             if (i > 0) {
@@ -88,51 +98,30 @@ public class QuizRound {
     }
 
     /**
-     * 玩家提交答案
-     * @return true 表示回答正确且有效（抢答题为第一个答对，问答题为首次答对）
+     * 玩家提交答案（每人每轮仅限一次）
      */
-    public boolean submitAnswer(UUID playerUuid, int optionIndex) {
-        if (!active) return false;
+    public SubmitResult submitAnswer(UUID playerUuid, int optionIndex) {
+        if (!active) return SubmitResult.ROUND_ENDED;
+        if (allSubmissions.contains(playerUuid)) return SubmitResult.ALREADY_SUBMITTED;
 
-        if (question.getType() == QuestionType.RACE) {
-            // 抢答题：仅第一位答对者得分
-            if (answered) return false;
-            if (!question.isCorrect(optionIndex)) return false;
-            answered = true;
-            active = false;
-            return true;
-        } else {
-            // 问答题：所有答对者均得分，但每人只能答一次
-            if (answeredPlayers.contains(playerUuid)) return false;
-            if (!question.isCorrect(optionIndex)) return false;
-            answeredPlayers.add(playerUuid);
-            return true;
+        allSubmissions.add(playerUuid);
+
+        if (!question.isCorrect(optionIndex)) {
+            return SubmitResult.WRONG;
         }
+
+        // 回答正确
+        allCorrectPlayers.add(playerUuid);
+
+        if (randomizedType == QuestionType.RACE && firstCorrectPlayer == null) {
+            firstCorrectPlayer = playerUuid;
+        }
+
+        return SubmitResult.CORRECT;
     }
 
     /**
-     * 检查该玩家是否已经答过本题（问答题防重复）
-     */
-    public boolean hasAnswered(UUID playerUuid) {
-        return answeredPlayers.contains(playerUuid);
-    }
-
-    /**
-     * 是否已有人答对（抢答题）
-     */
-    public boolean isAnswered() {
-        return answered;
-    }
-
-    /**
-     * 本轮是否仍在进行中
-     */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * 结束本轮，广播正确答案
+     * 结束本题，公布正确答案和答对玩家
      */
     private void endRound() {
         List<String> options = question.getOptions();
@@ -140,10 +129,47 @@ public class QuizRound {
         char correctLabel = (char) ('A' + correctIdx);
         String answerStr = correctLabel + ". " + options.get(correctIdx);
 
-        String key = question.getType() == QuestionType.RACE ? "race-timeout" : "quiz-timeout";
-        plugin.getLang().broadcast(key, "answer", answerStr);
+        if (randomizedType == QuestionType.RACE) {
+            if (firstCorrectPlayer != null) {
+                plugin.getLang().broadcast("race-answer", "answer", answerStr);
+                String name = plugin.getServer().getOfflinePlayer(firstCorrectPlayer).getName();
+                if (name == null) name = firstCorrectPlayer.toString();
+                plugin.getLang().broadcast("race-correct-first", "player", name, "points", String.valueOf(points));
+            } else {
+                plugin.getLang().broadcast("race-timeout", "answer", answerStr);
+            }
+        } else {
+            if (!allCorrectPlayers.isEmpty()) {
+                plugin.getLang().broadcast("quiz-answer", "answer", answerStr);
+                for (UUID uuid : allCorrectPlayers) {
+                    String name = plugin.getServer().getOfflinePlayer(uuid).getName();
+                    if (name == null) name = uuid.toString();
+                    plugin.getLang().broadcast("quiz-correct", "player", name, "points", String.valueOf(points));
+                }
+            } else {
+                plugin.getLang().broadcast("quiz-timeout", "answer", answerStr);
+            }
+        }
+
+        // 通知管理器继续下一题或结束本轮
+        if (onEnd != null) {
+            onEnd.run();
+        }
+    }
+
+    public boolean hasAnswered(UUID playerUuid) {
+        return allSubmissions.contains(playerUuid);
+    }
+
+    public boolean isAnswered() {
+        return firstCorrectPlayer != null;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public Question getQuestion() { return question; }
     public int getPoints() { return points; }
+    public QuestionType getRandomizedType() { return randomizedType; }
 }

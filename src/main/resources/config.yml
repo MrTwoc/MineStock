@@ -1,10 +1,16 @@
 # MineQuiz 知识竞赛插件配置文件
 
-# 定时问答间隔（分钟）
-quiz-interval: 5
+# 每轮题目数量
+questions-per-round: 5
+
+# 轮次间隔（分钟）
+round-interval: 30
 
 # 每题答题时间（秒）
 answer-time: 30
+
+# 每题之间间隔（秒）
+between-questions-delay: 10
 
 # 抢答题每题得分
 race-points: 10
@@ -12,8 +18,5 @@ race-points: 10
 # 问答题（不限人数）每题得分
 quiz-points: 5
 
-# 两轮之间间隔（秒）
-between-rounds-delay: 15
-
-# 开启答题的最低在线玩家数（少于该人数则跳过自动出题）
-min-players: 2
+# 开启答题的最低在线玩家数（少于该人数则跳过本轮）
+min-players: 1

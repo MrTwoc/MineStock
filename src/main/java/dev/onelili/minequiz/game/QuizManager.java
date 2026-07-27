@@ -7,10 +7,14 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 /**
- * 问答管理器 — 全局单例，控制问答轮次调度
+ * 问答管理器 — 全局单例，控制轮次调度与分数管理
+ *
+ * 每轮包含多道题目，题型在 抢答/问答 之间随机分配。
+ * 每道题结束后自动进入下一题，全部完成后等待轮次间隔再开启下一轮。
  */
 public class QuizManager {
 
@@ -19,9 +23,16 @@ public class QuizManager {
     private final MineQuiz plugin;
     private final DatabaseManager database;
     private final Map<UUID, Integer> scores = new HashMap<>();
+    private final Random random = new Random();
+
+    /** 当前正在答题的题目（一轮中的一道题） */
     private QuizRound currentRound;
+    /** 自动轮次定时任务 */
     private BukkitTask autoTask;
+    /** 自动轮次是否已启动 */
     private boolean running;
+    /** 本轮剩余题目数 */
+    private int questionsRemaining;
 
     private QuizManager(MineQuiz plugin) {
         this.plugin = plugin;
@@ -57,12 +68,12 @@ public class QuizManager {
     }
 
     /**
-     * 启动自动问答计时器
+     * 启动自动问答轮次
      */
     public void startAutoQuiz() {
         if (running) return;
         running = true;
-        scheduleNext();
+        scheduleNextRound();
     }
 
     /**
@@ -74,29 +85,31 @@ public class QuizManager {
             autoTask.cancel();
             autoTask = null;
         }
-        if (currentRound != null) {
-            currentRound = null;
-        }
-        // 停止时将所有内存中的分数写回数据库
+        finishCurrentRound();
         database.saveAllScores(scores);
     }
 
     /**
-     * 手动立即开始一轮问答
+     * 手动立即开始一轮问答（若已在答题则忽略）
      */
     public void forceStart() {
         if (currentRound != null && currentRound.isActive()) {
-            return; // 当前有题目正在进行
+            return;
+        }
+        // 取消已排期的自动轮次
+        if (autoTask != null) {
+            autoTask.cancel();
+            autoTask = null;
         }
         startNewRound();
     }
 
     /**
-     * 安排下一次自动问答
+     * 安排下一轮自动问答
      */
-    private void scheduleNext() {
+    private void scheduleNextRound() {
         if (!running) return;
-        int interval = plugin.getQuizConfig().getQuizInterval();
+        int interval = plugin.getQuizConfig().getRoundInterval();
         autoTask = Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if (!running) return;
             startNewRound();
@@ -107,93 +120,132 @@ public class QuizManager {
      * 开始新一轮问答
      */
     private void startNewRound() {
-        // 检查在线玩家数是否达到最低要求
+        // 检查在线玩家数
         int online = Bukkit.getOnlinePlayers().size();
         int minPlayers = plugin.getQuizConfig().getMinPlayers();
         if (online < minPlayers) {
             plugin.getLang().broadcast("not-enough-players", "min", String.valueOf(minPlayers));
             if (running) {
-                scheduleNext();
+                scheduleNextRound();
             }
             return;
         }
 
+        questionsRemaining = plugin.getQuizConfig().getQuestionsPerRound();
+        plugin.getLang().broadcast("round-start", "count", String.valueOf(questionsRemaining));
+        startNextQuestion();
+    }
+
+    /**
+     * 开始本轮中的下一道题
+     */
+    private void startNextQuestion() {
+        questionsRemaining--;
+
         Question question = plugin.getQuestionBank().nextQuestion();
         if (question == null) {
             plugin.getLang().broadcast("no-questions");
+            onRoundFinished();
             return;
         }
 
+        // 随机分配题型
+        QuestionType type = random.nextBoolean() ? QuestionType.RACE : QuestionType.QUIZ;
+
         int answerTimeSeconds = plugin.getQuizConfig().getAnswerTime();
-        int points = question.getType() == QuestionType.RACE
+        int pts = type == QuestionType.RACE
                 ? plugin.getQuizConfig().getRacePoints()
                 : plugin.getQuizConfig().getQuizPoints();
 
-        currentRound = new QuizRound(plugin, question, answerTimeSeconds, points);
+        currentRound = new QuizRound(plugin, question, answerTimeSeconds, pts, type, this::onQuestionEnd);
         currentRound.start();
     }
 
     /**
-     * 处理玩家答题
+     * 一道题结束后的回调 — 启动下一题或结束本轮
+     */
+    private void onQuestionEnd() {
+        currentRound = null;
+
+        if (questionsRemaining > 0) {
+            int delay = plugin.getQuizConfig().getBetweenQuestionsDelay();
+            Bukkit.getScheduler().runTaskLater(plugin, this::startNextQuestion, delay * 20L);
+        } else {
+            onRoundFinished();
+        }
+    }
+
+    /**
+     * 本轮全部题目结束
+     */
+    private void onRoundFinished() {
+        plugin.getLang().broadcast("quiz-ended");
+
+        if (running) {
+            // 断线重连保护：先确保无残留自动任务，再排下一轮
+            if (autoTask != null) {
+                autoTask.cancel();
+                autoTask = null;
+            }
+            scheduleNextRound();
+        }
+    }
+
+    /**
+     * 强制结束当前轮次（插件卸载时调用）
+     */
+    private void finishCurrentRound() {
+        if (currentRound != null) {
+            currentRound = null;
+        }
+        questionsRemaining = 0;
+    }
+
+    // ========= 玩家答题 & 分数查询 =========
+
+    /**
+     * 处理玩家答题 — 仅记录答案和分数，不提前公布结果
      */
     public void handleAnswer(UUID playerUuid, int questionId, int optionIndex) {
         if (currentRound == null || !currentRound.isActive()) return;
         if (currentRound.getQuestion().getId() != questionId) return;
 
-        boolean correct = currentRound.submitAnswer(playerUuid, optionIndex);
         var player = Bukkit.getPlayer(playerUuid);
         if (player == null) return;
 
-        if (correct) {
-            int pts = currentRound.getPoints();
-            scores.merge(playerUuid, pts, Integer::sum);
-            int total = scores.get(playerUuid);
+        var result = currentRound.submitAnswer(playerUuid, optionIndex);
 
-            // 持久化到 SQLite
-            database.saveScore(playerUuid, total);
-
-            String key = currentRound.getQuestion().getType() == QuestionType.RACE
-                    ? "race-correct-first" : "quiz-correct";
-            plugin.getLang().broadcast(key, "player", player.getName(), "points", String.valueOf(pts));
-            player.sendMessage(plugin.getLang().get("personal-score", "score", String.valueOf(total)));
-        } else {
-            // 检查是否因为重复回答
-            if (currentRound.hasAnswered(playerUuid)) {
-                plugin.getLang().send(player, "quiz-duplicate", "player", player.getName());
-            } else if (currentRound.isAnswered()) {
-                plugin.getLang().send(player, "race-wrong-order");
-            } else {
-                String key = currentRound.getQuestion().getType() == QuestionType.RACE
-                        ? "race-incorrect" : "quiz-incorrect";
-                plugin.getLang().send(player, key, "player", player.getName());
+        switch (result) {
+            case CORRECT -> {
+                int pts = currentRound.getPoints();
+                scores.merge(playerUuid, pts, Integer::sum);
+                database.saveScore(playerUuid, scores.get(playerUuid));
+                plugin.getLang().send(player, "answer-submitted");
+            }
+            case WRONG -> {
+                plugin.getLang().send(player, "answer-submitted");
+            }
+            case ALREADY_SUBMITTED -> {
+                plugin.getLang().send(player, "already-answered");
+            }
+            case ROUND_ENDED -> {
+                // 无操作
             }
         }
     }
 
-    /**
-     * 获取指定玩家的总分
-     */
     public int getScore(UUID playerUuid) {
         return scores.getOrDefault(playerUuid, 0);
     }
 
-    /**
-     * 获取所有玩家分数（不可变视图）
-     */
     public Map<UUID, Integer> getScores() {
         return Map.copyOf(scores);
     }
 
-    /**
-     * 获取当前轮次
-     */
     public QuizRound getCurrentRound() {
         return currentRound;
     }
 
-    /**
-     * 是否正在运行
-     */
     public boolean isRunning() {
         return running;
     }
