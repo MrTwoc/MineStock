@@ -1,0 +1,94 @@
+# ════════════════════════════════════════════
+#  人文历史 题库
+#  答题类型: RACE - 抢答 / QUIZ - 问答
+#  答案索引从 0 开始
+# ════════════════════════════════════════════
+
+questions:
+  - id: 9
+    type: RACE
+    category: 人文历史
+    question: "中国历史上第一个统一的封建王朝是？"
+    options:
+      - "周朝"
+      - "商朝"
+      - "秦朝"
+      - "汉朝"
+    answer: 2
+
+  - id: 10
+    type: QUIZ
+    category: 人文历史
+    question: "二战中诺曼底登陆发生在哪一年？"
+    options:
+      - "1943年"
+      - "1944年"
+      - "1945年"
+      - "1942年"
+    answer: 1
+
+  - id: 11
+    type: RACE
+    category: 人文历史
+    question: "\"文艺复兴\"运动最早起源于哪个国家？"
+    options:
+      - "法国"
+      - "英国"
+      - "意大利"
+      - "西班牙"
+    answer: 2
+
+  - id: 12
+    type: QUIZ
+    category: 人文历史
+    question: "《红楼梦》的作者是谁？"
+    options:
+      - "罗贯中"
+      - "施耐庵"
+      - "吴承恩"
+      - "曹雪芹"
+    answer: 3
+
+  - id: 13
+    type: RACE
+    category: 人文历史
+    question: "古埃及最大的金字塔是？"
+    options:
+      - "哈夫拉金字塔"
+      - "胡夫金字塔"
+      - "门卡乌拉金字塔"
+      - "红色金字塔"
+    answer: 1
+
+  - id: 14
+    type: QUIZ
+    category: 人文历史
+    question: "第一次世界大战爆发的导火索是？"
+    options:
+      - "卢西塔尼亚号事件"
+      - "萨拉热窝事件"
+      - "巴尔干战争"
+      - "摩洛哥危机"
+    answer: 1
+
+  - id: 15
+    type: RACE
+    category: 人文历史
+    question: "\"丝绸之路\"最早开辟于哪个朝代？"
+    options:
+      - "秦朝"
+      - "汉朝"
+      - "唐朝"
+      - "宋朝"
+    answer: 1
+
+  - id: 16
+    type: QUIZ
+    category: 人文历史
+    question: "美国独立宣言签署于哪一年？"
+    options:
+      - "1774年"
+      - "1775年"
+      - "1776年"
+      - "1777年"
+    answer: 2

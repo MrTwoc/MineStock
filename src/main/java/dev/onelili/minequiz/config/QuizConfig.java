@@ -17,6 +17,7 @@ public class QuizConfig {
     private int quizPoints;
     private int minPlayers;
     private boolean logToConsole;
+    private boolean showAnswer;
 
     public QuizConfig(MineQuiz plugin) {
         this.plugin = plugin;
@@ -36,6 +37,7 @@ public class QuizConfig {
         quizPoints = cfg.getInt("quiz-points", 5);
         minPlayers = cfg.getInt("min-players", 2);
         logToConsole = cfg.getBoolean("log-to-console", true);
+        showAnswer = cfg.getBoolean("show-answer", true);
     }
 
     /** 每轮题目数量 */
@@ -54,4 +56,6 @@ public class QuizConfig {
     public int getMinPlayers() { return minPlayers; }
     /** 是否在控制台输出发送给玩家的消息 */
     public boolean isLogToConsole() { return logToConsole; }
+    /** 答题时间结束后是否公布正确答案 */
+    public boolean isShowAnswer() { return showAnswer; }
 }

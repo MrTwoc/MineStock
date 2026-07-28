@@ -1,0 +1,116 @@
+# ════════════════════════════════════════════
+#  计算机与数学 题库
+#  答题类型: RACE - 抢答 / QUIZ - 问答
+#  答案索引从 0 开始
+# ════════════════════════════════════════════
+
+questions:
+  - id: 17
+    type: RACE
+    category: 计算机与数学
+    question: "计算机中 1GB 等于多少 MB？"
+    options:
+      - "100"
+      - "512"
+      - "1000"
+      - "1024"
+    answer: 3
+
+  - id: 18
+    type: QUIZ
+    category: 计算机与数学
+    question: "Python 中用于输出信息的内置函数是？"
+    options:
+      - "print()"
+      - "echo()"
+      - "write()"
+      - "output()"
+    answer: 0
+
+  - id: 19
+    type: RACE
+    category: 计算机与数学
+    question: "圆的面积公式是？"
+    options:
+      - "2πr"
+      - "πr²"
+      - "πd"
+      - "4πr²"
+    answer: 1
+
+  - id: 20
+    type: QUIZ
+    category: 计算机与数学
+    question: "HTTP 状态码 404 表示什么？"
+    options:
+      - "服务器错误"
+      - "未授权"
+      - "页面未找到"
+      - "请求超时"
+    answer: 2
+
+  - id: 21
+    type: RACE
+    category: 计算机与数学
+    question: "Minecraft 中红石粉的最大传输距离是？"
+    options:
+      - "10格"
+      - "15格"
+      - "20格"
+      - "无限"
+    answer: 1
+
+  - id: 22
+    type: QUIZ
+    category: 计算机与数学
+    question: "以下哪种是关系型数据库？"
+    options:
+      - "Redis"
+      - "MongoDB"
+      - "MySQL"
+      - "Elasticsearch"
+    answer: 2
+
+  - id: 23
+    type: RACE
+    category: 计算机与数学
+    question: "32 的二进制表示是？"
+    options:
+      - "10000"
+      - "100000"
+      - "1000000"
+      - "10000000"
+    answer: 1
+
+  - id: 24
+    type: QUIZ
+    category: 计算机与数学
+    question: "Java 编程语言中，main 方法的返回类型是？"
+    options:
+      - "int"
+      - "String"
+      - "void"
+      - "boolean"
+    answer: 2
+
+  - id: 25
+    type: RACE
+    category: 计算机与数学
+    question: "一个正方体有几个顶点？"
+    options:
+      - "4"
+      - "6"
+      - "8"
+      - "12"
+    answer: 2
+
+  - id: 26
+    type: QUIZ
+    category: 计算机与数学
+    question: "操作系统中的「进程」与「线程」相比，哪个更轻量？"
+    options:
+      - "进程"
+      - "线程"
+      - "一样重"
+      - "无法比较"
+    answer: 1

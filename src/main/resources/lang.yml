@@ -28,6 +28,7 @@ race-correct-first: "<gold>{player}</gold><green> 抢答正确！获得 {points}
 race-incorrect:     "<red>{player} 回答错误！</red>"
 race-wrong-order:   "<gray>已有人答对，本题抢答结束！</gray>"
 race-timeout:       "<red>抢答题时间到！正确答案是：{answer}</red>"
+race-timeout-no-answer: "<red>抢答题时间到！本题无人答对</red>"
 
 # ── 问答题 ──────────────────────────────────────────────────
 quiz-announce: |
@@ -39,6 +40,7 @@ quiz-correct:   "<green>回答正确！{player} 获得 {points} 分！</green>"
 quiz-incorrect: "<red>{player} 回答错误！</red>"
 quiz-duplicate: "<gray>{player} 你已经回答过本题了！</gray>"
 quiz-timeout:   "<red>问答题时间到！正确答案是：{answer}</red>"
+quiz-timeout-no-answer: "<red>问答题时间到！本题无人答对</red>"
 
 # ── 通用 ────────────────────────────────────────────────────
 answer-hint:     "<gray>聊天框点击选项即可作答：</gray>"

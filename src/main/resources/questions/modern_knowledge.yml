@@ -1,0 +1,116 @@
+# ════════════════════════════════════════════
+#  现代基础知识 题库
+#  答题类型: RACE - 抢答 / QUIZ - 问答
+#  答案索引从 0 开始
+# ════════════════════════════════════════════
+
+questions:
+  - id: 27
+    type: RACE
+    category: 现代基础知识
+    question: "人体最大的器官是？"
+    options:
+      - "心脏"
+      - "肝脏"
+      - "皮肤"
+      - "大脑"
+    answer: 2
+
+  - id: 28
+    type: QUIZ
+    category: 现代基础知识
+    question: "DNA 的双螺旋结构由谁发现？"
+    options:
+      - "达尔文"
+      - "牛顿"
+      - "爱因斯坦"
+      - "沃森和克里克"
+    answer: 3
+
+  - id: 29
+    type: RACE
+    category: 现代基础知识
+    question: "世界上最长的河流是？"
+    options:
+      - "长江"
+      - "亚马逊河"
+      - "尼罗河"
+      - "密西西比河"
+    answer: 2
+
+  - id: 30
+    type: QUIZ
+    category: 现代基础知识
+    question: "光速在真空中约为多少？"
+    options:
+      - "3×10⁶ m/s"
+      - "3×10⁷ m/s"
+      - "3×10⁸ m/s"
+      - "3×10⁹ m/s"
+    answer: 2
+
+  - id: 31
+    type: RACE
+    category: 现代基础知识
+    question: "水的沸点在标准大气压下为多少摄氏度？"
+    options:
+      - "90°C"
+      - "100°C"
+      - "110°C"
+      - "120°C"
+    answer: 1
+
+  - id: 32
+    type: QUIZ
+    category: 现代基础知识
+    question: "人类最早驯化的动物是？"
+    options:
+      - "牛"
+      - "马"
+      - "狗"
+      - "鸡"
+    answer: 2
+
+  - id: 33
+    type: RACE
+    category: 现代基础知识
+    question: "汽车的发明者通常被认为是？"
+    options:
+      - "福特"
+      - "奔驰"
+      - "爱迪生"
+      - "瓦特"
+    answer: 1
+
+  - id: 34
+    type: QUIZ
+    category: 现代基础知识
+    question: "世界卫生组织的简称是？"
+    options:
+      - "WHO"
+      - "WTO"
+      - "WMO"
+      - "UNESCO"
+    answer: 0
+
+  - id: 35
+    type: RACE
+    category: 现代基础知识
+    question: "一年中哪个月份天数最少？"
+    options:
+      - "1月"
+      - "2月"
+      - "6月"
+      - "11月"
+    answer: 1
+
+  - id: 36
+    type: QUIZ
+    category: 现代基础知识
+    question: "诺贝尔奖不包括以下哪个领域？"
+    options:
+      - "物理"
+      - "化学"
+      - "数学"
+      - "和平"
+    answer: 2

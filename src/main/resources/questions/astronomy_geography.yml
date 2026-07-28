@@ -1,0 +1,94 @@
+# ════════════════════════════════════════════
+#  天文地理 题库
+#  答题类型: RACE - 抢答 / QUIZ - 问答
+#  答案索引从 0 开始
+# ════════════════════════════════════════════
+
+questions:
+  - id: 1
+    type: RACE
+    category: 天文地理
+    question: "太阳系中最大的行星是？"
+    options:
+      - "地球"
+      - "木星"
+      - "土星"
+      - "天王星"
+    answer: 1
+
+  - id: 2
+    type: QUIZ
+    category: 天文地理
+    question: "地球的天然卫星是什么？"
+    options:
+      - "太阳"
+      - "月球"
+      - "火星"
+      - "金星"
+    answer: 1
+
+  - id: 3
+    type: RACE
+    category: 天文地理
+    question: "光年是衡量什么的单位？"
+    options:
+      - "时间"
+      - "速度"
+      - "距离"
+      - "亮度"
+    answer: 2
+
+  - id: 4
+    type: QUIZ
+    category: 天文地理
+    question: "被称为「世界屋脊」的是哪个高原？"
+    options:
+      - "云贵高原"
+      - "青藏高原"
+      - "内蒙古高原"
+      - "黄土高原"
+    answer: 1
+
+  - id: 5
+    type: RACE
+    category: 天文地理
+    question: "世界上面积最大的国家是？"
+    options:
+      - "中国"
+      - "美国"
+      - "加拿大"
+      - "俄罗斯"
+    answer: 3
+
+  - id: 6
+    type: QUIZ
+    category: 天文地理
+    question: "太阳系中离太阳最近的行星是？"
+    options:
+      - "水星"
+      - "金星"
+      - "地球"
+      - "火星"
+    answer: 0
+
+  - id: 7
+    type: RACE
+    category: 天文地理
+    question: "赤道穿过的大洲有几个？"
+    options:
+      - "2个"
+      - "3个"
+      - "4个"
+      - "5个"
+    answer: 1
+
+  - id: 8
+    type: QUIZ
+    category: 天文地理
+    question: "世界上最大的海洋是？"
+    options:
+      - "大西洋"
+      - "印度洋"
+      - "太平洋"
+      - "北冰洋"
+    answer: 2

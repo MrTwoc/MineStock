@@ -129,11 +129,12 @@ public class QuizRound {
     }
 
     /**
-     * 结束本题，公布正确答案和答对玩家
+     * 结束本题，公布正确答案（若配置允许）和答对玩家
      */
     private void endRound() {
         if (ended) return;
         ended = true;
+        boolean showAnswer = plugin.getQuizConfig().isShowAnswer();
         List<String> options = question.getOptions();
         int correctIdx = question.getAnswer();
         char correctLabel = (char) ('A' + correctIdx);
@@ -141,23 +142,35 @@ public class QuizRound {
 
         if (randomizedType == QuestionType.RACE) {
             if (firstCorrectPlayer != null) {
-                plugin.getLang().broadcast("race-answer", "answer", answerStr);
+                if (showAnswer) {
+                    plugin.getLang().broadcast("race-answer", "answer", answerStr);
+                }
                 String name = plugin.getServer().getOfflinePlayer(firstCorrectPlayer).getName();
                 if (name == null) name = firstCorrectPlayer.toString();
                 plugin.getLang().broadcast("race-correct-first", "player", name, "points", String.valueOf(points));
             } else {
-                plugin.getLang().broadcast("race-timeout", "answer", answerStr);
+                if (showAnswer) {
+                    plugin.getLang().broadcast("race-timeout", "answer", answerStr);
+                } else {
+                    plugin.getLang().broadcast("race-timeout-no-answer");
+                }
             }
         } else {
             if (!allCorrectPlayers.isEmpty()) {
-                plugin.getLang().broadcast("quiz-answer", "answer", answerStr);
+                if (showAnswer) {
+                    plugin.getLang().broadcast("quiz-answer", "answer", answerStr);
+                }
                 for (UUID uuid : allCorrectPlayers) {
                     String name = plugin.getServer().getOfflinePlayer(uuid).getName();
                     if (name == null) name = uuid.toString();
                     plugin.getLang().broadcast("quiz-correct", "player", name, "points", String.valueOf(points));
                 }
             } else {
-                plugin.getLang().broadcast("quiz-timeout", "answer", answerStr);
+                if (showAnswer) {
+                    plugin.getLang().broadcast("quiz-timeout", "answer", answerStr);
+                } else {
+                    plugin.getLang().broadcast("quiz-timeout-no-answer");
+                }
             }
         }
 
